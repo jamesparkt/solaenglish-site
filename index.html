@@ -258,33 +258,88 @@
     .hero-art {
       position: relative;
       aspect-ratio: 1/1;
-      max-width: 540px; margin-left: auto;
+      max-width: 560px; margin-left: auto;
     }
-    .hero-art svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .hero-art-bg {
+      position: absolute; inset: 6% 6% 12% 6%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #FFE6C8 0%, #FCD9A8 55%, #F7BE7E 100%);
+      box-shadow: 0 30px 80px rgba(232,93,60,.18), 0 12px 30px rgba(26,26,42,.06);
+    }
+    .hero-art-bg::after {
+      content: ""; position: absolute; inset: 12%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.5), transparent 60%);
+    }
+    .hero-art-img {
+      position: relative; z-index: 2;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 18px 24px rgba(26,26,42,.18));
+      animation: floatY 6s ease-in-out infinite;
+    }
+    .hero-art--missing .hero-art-bg {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-art--missing .hero-art-bg::before {
+      content: "students-illustration.png 파일을 작업 폴더에 넣어주세요";
+      position: absolute; left: 8%; right: 8%; top: 45%; text-align: center;
+      color: var(--c-primary-deep); font-size: 13px; font-weight: 600;
+      line-height: 1.5;
+    }
+    .hero-tag {
+      position: absolute; z-index: 3;
+      background: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-family: var(--font-en);
+      font-weight: 700; font-size: 14px;
+      color: var(--c-primary-deep);
+      box-shadow: 0 8px 24px rgba(26,26,42,.12), 0 2px 6px rgba(232,93,60,.18);
+      border: 1.5px solid var(--c-amber-soft);
+      white-space: nowrap;
+    }
+    .hero-tag::after {
+      content: ""; position: absolute;
+      width: 12px; height: 12px;
+      background: #fff;
+      border: 1.5px solid var(--c-amber-soft);
+      transform: rotate(45deg);
+    }
+    .hero-tag--hello {
+      top: 12%; right: -2%;
+      color: var(--c-primary-deep);
+      animation: floatY 5s ease-in-out infinite;
+    }
+    .hero-tag--hello::after {
+      bottom: -7px; left: 30%;
+      border-top: none; border-left: none;
+    }
+    .hero-tag--ask {
+      bottom: 22%; left: -4%;
+      color: var(--c-primary);
+      animation: floatY 5s ease-in-out 1.5s infinite;
+    }
+    .hero-tag--ask::after {
+      top: -7px; right: 28%;
+      border-bottom: none; border-right: none;
+    }
     @keyframes floatY {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-10px); }
     }
-    @keyframes wave {
-      0%, 100% { transform: rotate(-8deg); }
-      50% { transform: rotate(8deg); }
-    }
-    @keyframes bubblePop {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-    }
-    .ill-bubble-girl { transform-origin: 145px 145px; animation: floatY 4s ease-in-out infinite; }
-    .ill-bubble-boy  { transform-origin: 380px 165px; animation: floatY 4s ease-in-out 1s infinite; }
-    .ill-hand-girl   { transform-origin: 180px 245px; animation: wave 3s ease-in-out infinite; }
-    .ill-spark       { animation: bubblePop 2.6s ease-in-out infinite; transform-origin: center; }
 
     @media (max-width: 860px) {
       .hero { padding: 110px 0 50px; }
       .hero-inner { grid-template-columns: 1fr; gap: 40px; }
       .hero-art { max-width: 380px; margin: 0 auto; }
+      .hero-tag { font-size: 12px; padding: 8px 14px; }
+      .hero-tag--hello { right: 0; }
+      .hero-tag--ask { left: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .hero-art *, .ill-bubble-girl, .ill-bubble-boy, .ill-hand-girl, .ill-spark { animation: none !important; }
+      .hero-art-img, .hero-tag { animation: none !important; }
     }
 
     /* ====== Section base ====== */
@@ -696,161 +751,14 @@
         </div>
 
         <div class="hero-art reveal" aria-hidden="true">
-          <svg viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="책상에서 영어로 말하는 두 아이">
-            <defs>
-              <radialGradient id="bgWarm" cx="50%" cy="45%" r="65%">
-                <stop offset="0%" stop-color="#FFE6C8"/>
-                <stop offset="60%" stop-color="#FCD9A8"/>
-                <stop offset="100%" stop-color="#F7BE7E"/>
-              </radialGradient>
-              <linearGradient id="deskGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#D8AB78"/>
-                <stop offset="100%" stop-color="#B98959"/>
-              </linearGradient>
-              <linearGradient id="shirtGirl" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#E85D3C"/>
-                <stop offset="100%" stop-color="#C04823"/>
-              </linearGradient>
-              <linearGradient id="shirtBoy" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#F4B860"/>
-                <stop offset="100%" stop-color="#D89944"/>
-              </linearGradient>
-              <filter id="softS" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
-                <feOffset dx="0" dy="6"/>
-                <feComponentTransfer><feFuncA type="linear" slope="0.16"/></feComponentTransfer>
-                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-
-            <!-- Soft warm background circle -->
-            <circle cx="270" cy="260" r="240" fill="url(#bgWarm)"/>
-            <circle cx="270" cy="260" r="200" fill="#FFF5E2" opacity="0.45"/>
-
-            <!-- Decorative ABC + star sparkles in background -->
-            <g class="ill-spark" fill="#E85D3C" opacity="0.9">
-              <text x="80" y="120" font-family="Inter, sans-serif" font-weight="800" font-size="22">A</text>
-            </g>
-            <g class="ill-spark" fill="#F4B860" opacity="0.9" style="animation-delay:.8s">
-              <text x="450" y="100" font-family="Inter, sans-serif" font-weight="800" font-size="22">B</text>
-            </g>
-            <g class="ill-spark" fill="#6BB5A0" opacity="0.9" style="animation-delay:1.4s">
-              <text x="455" y="430" font-family="Inter, sans-serif" font-weight="800" font-size="22">C</text>
-            </g>
-            <!-- small twinkle stars -->
-            <g class="ill-spark" fill="#E85D3C" style="animation-delay:.3s">
-              <path d="M 90 250 l 3 -10 l 3 10 l 10 3 l -10 3 l -3 10 l -3 -10 l -10 -3 z"/>
-            </g>
-            <g class="ill-spark" fill="#F4B860" style="animation-delay:1.1s">
-              <path d="M 460 240 l 3 -10 l 3 10 l 10 3 l -10 3 l -3 10 l -3 -10 l -10 -3 z"/>
-            </g>
-
-            <!-- ======= GIRL (left) ======= -->
-            <g filter="url(#softS)">
-              <!-- Body / shirt -->
-              <path d="M 130 360 Q 130 305 180 305 Q 230 305 230 360 L 230 420 L 130 420 Z" fill="url(#shirtGirl)"/>
-              <!-- Neck -->
-              <rect x="170" y="285" width="20" height="22" rx="6" fill="#F7D2A8"/>
-              <!-- Hand raised (right arm up) -->
-              <g class="ill-hand-girl">
-                <rect x="175" y="200" width="14" height="105" rx="7" fill="url(#shirtGirl)"/>
-                <circle cx="182" cy="200" r="13" fill="#F7D2A8"/>
-              </g>
-              <!-- Left arm resting on desk -->
-              <path d="M 130 355 Q 110 365 105 395 L 130 405 Z" fill="url(#shirtGirl)"/>
-              <circle cx="106" cy="396" r="11" fill="#F7D2A8"/>
-
-              <!-- Head -->
-              <ellipse cx="180" cy="248" rx="42" ry="44" fill="#F7D2A8"/>
-              <!-- Hair (bob with bangs) -->
-              <path d="M 138 248 Q 138 195 180 195 Q 222 195 222 248 Q 222 230 215 222 Q 200 240 180 240 Q 160 240 145 222 Q 138 230 138 248 Z" fill="#2C2418"/>
-              <!-- Hair pigtails -->
-              <ellipse cx="135" cy="248" rx="10" ry="18" fill="#2C2418"/>
-              <ellipse cx="225" cy="248" rx="10" ry="18" fill="#2C2418"/>
-              <!-- Hair ribbon -->
-              <circle cx="135" cy="232" r="5" fill="#E85D3C"/>
-              <circle cx="225" cy="232" r="5" fill="#E85D3C"/>
-              <!-- Eyes (closed/smiling arcs) -->
-              <path d="M 162 256 Q 167 252 172 256" stroke="#1A1A2A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-              <path d="M 188 256 Q 193 252 198 256" stroke="#1A1A2A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-              <!-- Cheeks blush -->
-              <circle cx="160" cy="270" r="5" fill="#E85D3C" opacity="0.35"/>
-              <circle cx="200" cy="270" r="5" fill="#E85D3C" opacity="0.35"/>
-              <!-- Smiling mouth (talking) -->
-              <path d="M 173 278 Q 180 285 187 278" stroke="#1A1A2A" stroke-width="2.5" stroke-linecap="round" fill="#fff"/>
-            </g>
-
-            <!-- ======= BOY (right) ======= -->
-            <g filter="url(#softS)">
-              <!-- Body / shirt -->
-              <path d="M 320 360 Q 320 305 370 305 Q 420 305 420 360 L 420 420 L 320 420 Z" fill="url(#shirtBoy)"/>
-              <!-- Neck -->
-              <rect x="360" y="285" width="20" height="22" rx="6" fill="#F7D2A8"/>
-              <!-- Both arms on desk -->
-              <path d="M 320 355 Q 305 370 305 400 L 335 405 Z" fill="url(#shirtBoy)"/>
-              <circle cx="306" cy="396" r="11" fill="#F7D2A8"/>
-              <path d="M 420 355 Q 432 365 432 395 L 405 405 Z" fill="url(#shirtBoy)"/>
-              <circle cx="430" cy="396" r="11" fill="#F7D2A8"/>
-
-              <!-- Head -->
-              <ellipse cx="370" cy="248" rx="42" ry="44" fill="#F7D2A8"/>
-              <!-- Hair (short, with bangs) -->
-              <path d="M 328 248 Q 328 195 370 195 Q 412 195 412 248 Q 412 232 404 226 L 395 232 L 384 220 L 372 232 L 360 220 L 348 232 L 338 226 Q 328 232 328 248 Z" fill="#2C2418"/>
-              <!-- Eyes (open, bright) -->
-              <circle cx="354" cy="256" r="3" fill="#1A1A2A"/>
-              <circle cx="386" cy="256" r="3" fill="#1A1A2A"/>
-              <circle cx="353" cy="255" r="1" fill="#fff"/>
-              <circle cx="385" cy="255" r="1" fill="#fff"/>
-              <!-- Cheeks blush -->
-              <circle cx="350" cy="270" r="5" fill="#E85D3C" opacity="0.35"/>
-              <circle cx="390" cy="270" r="5" fill="#E85D3C" opacity="0.35"/>
-              <!-- Big smile -->
-              <path d="M 358 278 Q 370 290 382 278" stroke="#1A1A2A" stroke-width="2.5" stroke-linecap="round" fill="#fff"/>
-            </g>
-
-            <!-- ======= DESK ======= -->
-            <g filter="url(#softS)">
-              <!-- Desktop -->
-              <path d="M 70 420 L 470 420 L 460 442 L 80 442 Z" fill="url(#deskGrad)"/>
-              <rect x="68" y="416" width="404" height="6" rx="3" fill="#C49B7A"/>
-              <!-- Front edge highlight -->
-              <rect x="70" y="420" width="400" height="3" fill="#F2D2A5" opacity="0.6"/>
-
-              <!-- Open book on desk -->
-              <g>
-                <ellipse cx="270" cy="424" rx="78" ry="5" fill="#1A1A2A" opacity="0.18"/>
-                <path d="M 200 395 Q 235 388 268 395 L 268 420 Q 235 414 200 420 Z" fill="#FFFFFF" stroke="#E85D3C" stroke-width="1.8"/>
-                <path d="M 340 395 Q 305 388 272 395 L 272 420 Q 305 414 340 420 Z" fill="#FFFFFF" stroke="#E85D3C" stroke-width="1.8"/>
-                <rect x="269" y="392" width="2" height="30" fill="#E85D3C"/>
-                <g stroke="#E85D3C" stroke-width="1.5" stroke-linecap="round" opacity="0.55">
-                  <line x1="210" y1="403" x2="260" y2="400"/>
-                  <line x1="210" y1="410" x2="258" y2="407"/>
-                  <line x1="210" y1="416" x2="252" y2="413"/>
-                  <line x1="280" y1="400" x2="330" y2="403"/>
-                  <line x1="282" y1="407" x2="330" y2="410"/>
-                  <line x1="288" y1="413" x2="330" y2="416"/>
-                </g>
-              </g>
-            </g>
-
-            <!-- ======= SPEECH BUBBLE — Girl (raised hand, asking) ======= -->
-            <g class="ill-bubble-girl" filter="url(#softS)">
-              <path d="M 60 110 Q 60 80 90 80 L 220 80 Q 250 80 250 110 L 250 165 Q 250 195 220 195 L 165 195 L 148 215 L 145 195 L 90 195 Q 60 195 60 165 Z"
-                    fill="#FFFFFF" stroke="#E85D3C" stroke-width="2.5"/>
-              <text x="155" y="125" font-family="Inter, sans-serif" font-weight="800" font-size="18" fill="#E85D3C" text-anchor="middle">May I ask</text>
-              <text x="155" y="155" font-family="Inter, sans-serif" font-weight="800" font-size="18" fill="#E85D3C" text-anchor="middle">a question?</text>
-              <!-- question mark accent -->
-              <text x="232" y="100" font-family="Inter, sans-serif" font-weight="800" font-size="18" fill="#F4B860">?</text>
-            </g>
-
-            <!-- ======= SPEECH BUBBLE — Boy (greeting) ======= -->
-            <g class="ill-bubble-boy" filter="url(#softS)">
-              <path d="M 300 130 Q 300 100 330 100 L 490 100 Q 520 100 520 130 L 520 180 Q 520 210 490 210 L 380 210 L 370 230 L 365 210 L 330 210 Q 300 210 300 180 Z"
-                    fill="#FFFFFF" stroke="#F4B860" stroke-width="2.5"/>
-              <text x="410" y="148" font-family="Inter, sans-serif" font-weight="800" font-size="20" fill="#C04823" text-anchor="middle">Hello!</text>
-              <text x="410" y="180" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#4A4A5A" text-anchor="middle">I love English.</text>
-            </g>
-          </svg>
+          <div class="hero-art-bg" aria-hidden="true"></div>
+          <img class="hero-art-img" src="students-illustration.png"
+               alt="책상에 앉아 영어로 말하고 손을 들고 질문하는 두 아이"
+               loading="eager"
+               onerror="this.parentNode.classList.add('hero-art--missing'); this.remove();"/>
+          <!-- Floating English word accents -->
+          <span class="hero-tag hero-tag--hello">Hello!</span>
+          <span class="hero-tag hero-tag--ask">May I ask?</span>
         </div>
       </div>
     </section>
@@ -989,9 +897,9 @@
         </div>
         <div class="news-grid">
           <!-- 3번 광고 · 최신 — Speech Contest 2026 -->
-          <article class="news-card reveal" onclick="openLightbox('assets/promo-3.png', '솔라 영어 말하기 대회')">
+          <article class="news-card reveal" onclick="openLightbox('promo-3.png', '솔라 영어 말하기 대회')">
             <div class="news-thumb">
-              <img src="assets/promo-3.png" alt="솔라 영어 말하기 대회 포스터" loading="lazy"
+              <img src="promo-3.png" alt="솔라 영어 말하기 대회 포스터" loading="lazy"
                    onerror="this.parentNode.classList.add('news-thumb--missing'); this.remove();"/>
             </div>
             <div class="news-body">
@@ -1003,9 +911,9 @@
           </article>
 
           <!-- 2번 광고 — Spelling Bee 2026 -->
-          <article class="news-card reveal" onclick="openLightbox('assets/promo-2.png', 'SOLA Spelling Bee 2026')">
+          <article class="news-card reveal" onclick="openLightbox('promo-2.png', 'SOLA Spelling Bee 2026')">
             <div class="news-thumb">
-              <img src="assets/promo-2.png" alt="SOLA Spelling Bee 포스터" loading="lazy"
+              <img src="promo-2.png" alt="SOLA Spelling Bee 포스터" loading="lazy"
                    onerror="this.parentNode.classList.add('news-thumb--missing'); this.remove();"/>
             </div>
             <div class="news-body">
@@ -1017,9 +925,9 @@
           </article>
 
           <!-- 1번 광고 — 졸업생 명단 -->
-          <article class="news-card reveal" onclick="openLightbox('assets/promo-1.png', '솔라 졸업생 진학 성과')">
+          <article class="news-card reveal" onclick="openLightbox('promo-1.png', '솔라 졸업생 진학 성과')">
             <div class="news-thumb">
-              <img src="assets/promo-1.png" alt="솔라 졸업생 진학 성과" loading="lazy"
+              <img src="promo-1.png" alt="솔라 졸업생 진학 성과" loading="lazy"
                    onerror="this.parentNode.classList.add('news-thumb--missing'); this.remove();"/>
             </div>
             <div class="news-body">
