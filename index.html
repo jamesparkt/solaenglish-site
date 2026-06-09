@@ -158,6 +158,8 @@
       display: block; width: 22px; height: 2px; background: var(--c-ink); margin: 5px 0; border-radius: 2px;
       transition: transform .2s;
     }
+    /* Hide mobile menu container by default (only show on small screens when open) */
+    .nav-mobile { display: none; }
 
     @media (max-width: 860px) {
       .nav-links { display: none; }
@@ -252,38 +254,34 @@
     .hero-art {
       position: relative;
       aspect-ratio: 1/1;
-      max-width: 480px; margin-left: auto;
+      max-width: 520px; margin-left: auto;
+      animation: float 6s ease-in-out infinite;
     }
-    .hero-art-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, #FFD3A7 0%, var(--c-primary) 80%);
-      border-radius: 50%;
-      box-shadow: var(--shadow-lg);
+    .hero-art svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
     }
-    .hero-art-img {
-      position: absolute; inset: 8% 8% 0 8%;
-      background-image: url("https://framerusercontent.com/images/WHYX6s4cbyCy50XXFZ5DZ5ACrc.png?width=600&height=600");
-      background-size: cover; background-position: center;
-      border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
-    .float-tag {
-      position: absolute; background: #fff; padding: 12px 16px;
-      border-radius: var(--r-md); box-shadow: var(--shadow-md);
-      display: flex; align-items: center; gap: 10px;
-      font-size: 13px; font-weight: 600;
+    @keyframes twinkle {
+      0%, 100% { opacity: .4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
     }
-    .float-tag.t1 { top: 8%; left: -8%; }
-    .float-tag.t2 { bottom: 14%; right: -6%; }
-    .float-tag .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .float-tag.t1 .dot { background: var(--c-mint); }
-    .float-tag.t2 .dot { background: var(--c-primary); }
+    .sun-rays { transform-origin: 250px 230px; animation: spinSlow 60s linear infinite; }
+    .twinkle-1 { animation: twinkle 2.4s ease-in-out infinite; transform-origin: center; }
+    .twinkle-2 { animation: twinkle 3.0s ease-in-out .4s infinite; transform-origin: center; }
+    .twinkle-3 { animation: twinkle 2.7s ease-in-out .9s infinite; transform-origin: center; }
 
     @media (max-width: 860px) {
       .hero { padding: 110px 0 50px; }
       .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-art { max-width: 340px; margin: 0 auto; }
-      .float-tag.t1 { left: 0; }
-      .float-tag.t2 { right: 0; }
+      .hero-art { max-width: 360px; margin: 0 auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-art, .sun-rays, [class^="twinkle"] { animation: none !important; }
     }
 
     /* ====== Section base ====== */
@@ -617,10 +615,108 @@
         </div>
 
         <div class="hero-art reveal" aria-hidden="true">
-          <div class="hero-art-bg"></div>
-          <div class="hero-art-img" role="img" aria-label="책을 들고 웃는 아이"></div>
-          <div class="float-tag t1"><span class="dot"></span> Reading · Writing</div>
-          <div class="float-tag t2"><span class="dot"></span> US Curriculum</div>
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="솔라 햇살 일러스트레이션">
+            <defs>
+              <radialGradient id="sunGrad" cx="50%" cy="50%" r="60%">
+                <stop offset="0%" stop-color="#FFD89B"/>
+                <stop offset="55%" stop-color="#F4B860"/>
+                <stop offset="100%" stop-color="#E85D3C"/>
+              </radialGradient>
+              <linearGradient id="bookCoverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="100%" stop-color="#FCEAC6"/>
+              </linearGradient>
+              <linearGradient id="bookSpineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E85D3C"/>
+                <stop offset="100%" stop-color="#C04823"/>
+              </linearGradient>
+              <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
+                <feOffset dx="0" dy="8"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- Soft halo -->
+            <circle cx="250" cy="230" r="190" fill="#FCEAC6" opacity="0.55"/>
+            <circle cx="250" cy="230" r="150" fill="#FBDBA0" opacity="0.55"/>
+
+            <!-- Rotating sun rays -->
+            <g class="sun-rays">
+              <g fill="#F4B860" opacity="0.85">
+                <rect x="244" y="20" width="12" height="42" rx="6"/>
+                <rect x="244" y="398" width="12" height="42" rx="6"/>
+                <rect x="40" y="224" width="42" height="12" rx="6"/>
+                <rect x="418" y="224" width="42" height="12" rx="6"/>
+              </g>
+              <g fill="#E85D3C" opacity="0.8">
+                <rect x="244" y="20" width="12" height="42" rx="6" transform="rotate(45 250 230)"/>
+                <rect x="244" y="20" width="12" height="42" rx="6" transform="rotate(135 250 230)"/>
+                <rect x="244" y="20" width="12" height="42" rx="6" transform="rotate(225 250 230)"/>
+                <rect x="244" y="20" width="12" height="42" rx="6" transform="rotate(315 250 230)"/>
+              </g>
+              <g fill="#F4B860" opacity="0.55">
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(22.5 250 230)"/>
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(67.5 250 230)"/>
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(112.5 250 230)"/>
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(157.5 250 230)"/>
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(202.5 250 230)"/>
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(247.5 250 230)"/>
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(292.5 250 230)"/>
+                <rect x="246" y="50" width="8" height="24" rx="4" transform="rotate(337.5 250 230)"/>
+              </g>
+            </g>
+
+            <!-- Sun core -->
+            <circle cx="250" cy="230" r="118" fill="url(#sunGrad)" filter="url(#softShadow)"/>
+            <circle cx="250" cy="230" r="118" fill="none" stroke="#fff" stroke-width="2" opacity="0.35"/>
+
+            <!-- Open book over the sun -->
+            <g filter="url(#softShadow)">
+              <!-- Book spine / shadow under -->
+              <ellipse cx="250" cy="290" rx="120" ry="10" fill="#1A1A2A" opacity="0.12"/>
+              <!-- Left page -->
+              <path d="M 142 200 Q 196 188 248 200 L 248 282 Q 196 270 142 282 Z"
+                    fill="url(#bookCoverGrad)" stroke="#E85D3C" stroke-width="2"/>
+              <!-- Right page -->
+              <path d="M 358 200 Q 304 188 252 200 L 252 282 Q 304 270 358 282 Z"
+                    fill="url(#bookCoverGrad)" stroke="#E85D3C" stroke-width="2"/>
+              <!-- Spine -->
+              <rect x="247" y="195" width="6" height="92" rx="2" fill="url(#bookSpineGrad)"/>
+              <!-- Text lines on left page -->
+              <g stroke="#E85D3C" stroke-width="2.5" stroke-linecap="round" opacity="0.55">
+                <line x1="160" y1="218" x2="232" y2="212"/>
+                <line x1="160" y1="232" x2="230" y2="226"/>
+                <line x1="160" y1="246" x2="220" y2="242"/>
+                <line x1="160" y1="260" x2="225" y2="256"/>
+              </g>
+              <!-- Text lines on right page -->
+              <g stroke="#E85D3C" stroke-width="2.5" stroke-linecap="round" opacity="0.55">
+                <line x1="268" y1="212" x2="340" y2="218"/>
+                <line x1="270" y1="226" x2="340" y2="232"/>
+                <line x1="280" y1="242" x2="340" y2="246"/>
+                <line x1="275" y1="256" x2="340" y2="260"/>
+              </g>
+              <!-- ABC accent on left page top -->
+              <text x="170" y="208" font-family="Inter, sans-serif" font-weight="800"
+                    font-size="14" fill="#E85D3C" opacity="0.9">ABC</text>
+            </g>
+
+            <!-- Twinkling stars / sparkles -->
+            <g class="twinkle-1">
+              <path d="M 90 110 l 4 -14 l 4 14 l 14 4 l -14 4 l -4 14 l -4 -14 l -14 -4 z" fill="#F4B860"/>
+            </g>
+            <g class="twinkle-2">
+              <path d="M 415 95 l 3 -10 l 3 10 l 10 3 l -10 3 l -3 10 l -3 -10 l -10 -3 z" fill="#E85D3C"/>
+            </g>
+            <g class="twinkle-3">
+              <path d="M 420 380 l 3 -10 l 3 10 l 10 3 l -10 3 l -3 10 l -3 -10 l -10 -3 z" fill="#F4B860"/>
+            </g>
+            <circle cx="78" cy="320" r="6" fill="#E85D3C" opacity="0.7" class="twinkle-2"/>
+            <circle cx="385" cy="155" r="5" fill="#F4B860" class="twinkle-3"/>
+            <circle cx="125" cy="395" r="7" fill="#F4B860" opacity="0.8" class="twinkle-1"/>
+          </svg>
         </div>
       </div>
     </section>
