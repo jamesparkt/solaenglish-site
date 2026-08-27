@@ -474,7 +474,10 @@
     /* ====== Features ====== */
     .features { background: #fff; }
     .features-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap);
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap);
+    }
+    @media (max-width: 1100px) {
+      .features-grid { grid-template-columns: 1fr 1fr; }
     }
     .feature {
       padding: 36px 28px 32px; border-radius: var(--r-lg);
@@ -886,6 +889,7 @@
             <div><span class="check">✓</span> <span><strong>100%</strong> 미국 원어민</span></div>
             <div><span class="check">✓</span> <span><strong>100%</strong> 영어 수업</span></div>
             <div><span class="check">✓</span> <span><strong>무료</strong> 영어 도서관</span></div>
+            <div><span class="check">✓</span> <span><strong>무료</strong> 셔틀 버스 운행</span></div>
           </div>
         </div>
 
@@ -925,7 +929,7 @@
       <div class="container">
         <div class="sec-head reveal">
           <div class="sec-eyebrow">Why SOLA</div>
-          <h2 class="sec-title">아이의 영어가 달라지는 세 가지 이유</h2>
+          <h2 class="sec-title">아이의 영어가 달라지는 네 가지 이유</h2>
           <p class="sec-desc">단순한 영어 학습이 아니라, 영어로 생각하고 표현하는 힘을 길러주는 환경을 만듭니다.</p>
         </div>
         <div class="features-grid">
@@ -946,6 +950,12 @@
             <h3>영어 도서관 무료 운영</h3>
             <p>다양한 레벨의 원서를 자유롭게 읽을 수 있는 원내 영어 도서관을 무료로 운영합니다. 영어가 일상이 되는 환경이에요.</p>
             <small>Free English Library</small>
+          </div>
+          <div class="feature reveal">
+            <div class="feature-icon">🚐</div>
+            <h3>무료 셔틀 버스 운행</h3>
+            <p>등하원 걱정 없이 안전하게. 학원 셔틀 버스를 무료로 운행하여 학부모님과 아이 모두 편안하게 다닐 수 있어요.</p>
+            <small>Free Shuttle Service</small>
           </div>
         </div>
       </div>
